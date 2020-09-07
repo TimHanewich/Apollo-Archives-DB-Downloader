@@ -45,18 +45,17 @@ namespace Apollo_Archives_DB_Downloader
                 List<string> this_entry_image_ids = new List<string>();
                 foreach (AttachedImage attimg in ai.AttachedImages)
                 {
-                    //Download the stream
-                    Console.WriteLine("Downloading image from " + attimg.LinkToImage + "...");
-                    HttpResponseMessage hrm = await hc.GetAsync(attimg.LinkToImage);
-                    Stream s = await hrm.Content.ReadAsStreamAsync();
-
-
-
+                    
                     //Get the extension of this link
                     int loc_sla = attimg.LinkToImage.LastIndexOf("/");
                     int loc_per = attimg.LinkToImage.LastIndexOf(".");
                     if (loc_per > loc_sla)
                     {
+                        //Download the stream
+                        Console.WriteLine("Downloading file from " + attimg.LinkToImage + "...");
+                        HttpResponseMessage hrm = await hc.GetAsync(attimg.LinkToImage);
+                        Stream s = await hrm.Content.ReadAsStreamAsync();
+
                         //Get the extension
                         string ext = attimg.LinkToImage.Substring(loc_per+1);
 
