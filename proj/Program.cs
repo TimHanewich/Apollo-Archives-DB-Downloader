@@ -23,6 +23,12 @@ namespace Apollo_Archives_DB_Downloader
             Console.WriteLine("Deserializing online reference path...");
             string aa_content = await System.IO.File.ReadAllTextAsync(archive_online_reference_path);
             ApolloArchive aa = JsonConvert.DeserializeObject<ApolloArchive>(aa_content);
+            
+            //Does the db folder exist? if not, make it
+            if (System.IO.Directory.Exists(db_folder_path) == false)
+            {
+                System.IO.Directory.CreateDirectory(db_folder_path);
+            }
 
             //Make the folder inside of the folder for holding images
             string image_folder_path = db_folder_path + "\\Images";
