@@ -31,7 +31,7 @@ namespace Apollo_Archives_DB_Downloader
             }
 
             //Make the folder inside of the folder for holding images
-            string image_folder_path = db_folder_path + "\\Images";
+            string image_folder_path = db_folder_path + "\\Files";
             System.IO.Directory.CreateDirectory(image_folder_path);
 
             HttpClient hc = new HttpClient();
@@ -57,25 +57,28 @@ namespace Apollo_Archives_DB_Downloader
                     int loc_sla = attimg.LinkToImage.LastIndexOf("/");
                     int loc_per = attimg.LinkToImage.LastIndexOf(".");
                     if (loc_per > loc_sla)
-                    {
-                        //Download the stream
-                        Console.WriteLine("Downloading file from " + attimg.LinkToImage + "...");
-                        HttpResponseMessage hrm = await hc.GetAsync(attimg.LinkToImage);
-                        Stream s = await hrm.Content.ReadAsStreamAsync();
-
+                    {     
                         //Get the extension
                         string ext = attimg.LinkToImage.Substring(loc_per+1);
+                        
+                        if (ext.ToLower().Contains("html") == false)
+                        {
+                            //Download the stream
+                            Console.WriteLine("Downloading file from " + attimg.LinkToImage + "...");
+                            HttpResponseMessage hrm = await hc.GetAsync(attimg.LinkToImage);
+                            Stream s = await hrm.Content.ReadAsStreamAsync();
 
-                        //Get a title for this
-                        string this_img_title = Guid.NewGuid().ToString() + "." + ext;
-                        string downloadpath = image_folder_path + "\\" + this_img_title;
-                        Stream write_to = System.IO.File.Create(downloadpath);
-                        s.CopyTo(write_to);
-                        write_to.Dispose();
-                        s.Dispose();
+                            //Get a title for this
+                            string this_img_title = Guid.NewGuid().ToString() + "." + ext;
+                            string downloadpath = image_folder_path + "\\" + this_img_title;
+                            Stream write_to = System.IO.File.Create(downloadpath);
+                            s.CopyTo(write_to);
+                            write_to.Dispose();
+                            s.Dispose();
 
-                        //Add it to the list of images for this entry
-                        this_entry_image_ids.Add(this_img_title);
+                            //Add it to the list of images for this entry
+                            this_entry_image_ids.Add(this_img_title);
+                        }
                     }                    
                 }
 
