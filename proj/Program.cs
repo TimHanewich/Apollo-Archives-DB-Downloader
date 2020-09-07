@@ -32,6 +32,7 @@ namespace Apollo_Archives_DB_Downloader
 
             //Make them one by one
             List<ApolloLogEntry> LogEntries = new List<ApolloLogEntry>();
+            int t = 0; //For tracking progress
             foreach (ArchivedImage ai in aa.Images)
             {
                 Console.WriteLine("Starting new log!");       
@@ -77,6 +78,9 @@ namespace Apollo_Archives_DB_Downloader
 
                 //Add it to the list
                 LogEntries.Add(ale);
+                t = t + 1;
+                float proj = (float)t / (float)ai.AttachedImages.Length;
+                Console.WriteLine(t.ToString("#,##0") + " / " + ai.AttachedImages.Length.ToString("#,##0") + "   " + proj.ToString("#0.0%") + " complete");
             }
 
 
