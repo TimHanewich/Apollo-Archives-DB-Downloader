@@ -80,7 +80,7 @@ namespace Apollo_Archives_DB_Downloader
                 LogEntries.Add(ale);
                 t = t + 1;
                 float proj = (float)t / (float)aa.Images.Length;
-                Console.WriteLine(t.ToString("#,##0") + "/" + ai.AttachedImages.Length.ToString("#,##0") + " complete (" + proj.ToString("#0.0%") + ")");
+                Console.WriteLine(t.ToString("#,##0") + "/" + aa.Images.Length.ToString("#,##0") + " complete (" + proj.ToString("#0.0%") + ")");
             }
 
 
