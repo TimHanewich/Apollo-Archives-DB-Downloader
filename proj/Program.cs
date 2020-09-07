@@ -50,20 +50,27 @@ namespace Apollo_Archives_DB_Downloader
                     HttpResponseMessage hrm = await hc.GetAsync(attimg.LinkToImage);
                     Stream s = await hrm.Content.ReadAsStreamAsync();
 
+
+
                     //Get the extension of this link
-                    int loc1 = attimg.LinkToImage.LastIndexOf(".");
-                    string ext = attimg.LinkToImage.Substring(loc1+1);
+                    int loc_sla = attimg.LinkToImage.LastIndexOf("/");
+                    int loc_per = attimg.LinkToImage.LastIndexOf(".");
+                    if (loc_per > loc_sla)
+                    {
+                        //Get the extension
+                        string ext = attimg.LinkToImage.Substring(loc_per+1);
 
-                    //Get a title for this
-                    string this_img_title = Guid.NewGuid().ToString() + ext;
-                    string downloadpath = image_folder_path + "\\" + this_img_title;
-                    Stream write_to = System.IO.File.Create(downloadpath);
-                    s.CopyTo(write_to);
-                    write_to.Dispose();
-                    s.Dispose();
+                        //Get a title for this
+                        string this_img_title = Guid.NewGuid().ToString() + ext;
+                        string downloadpath = image_folder_path + "\\" + this_img_title;
+                        Stream write_to = System.IO.File.Create(downloadpath);
+                        s.CopyTo(write_to);
+                        write_to.Dispose();
+                        s.Dispose();
 
-                    //Add it to the list of images for this entry
-                    this_entry_image_ids.Add(this_img_title);
+                        //Add it to the list of images for this entry
+                        this_entry_image_ids.Add(this_img_title);
+                    }                    
                 }
 
                 //Add those downloaded images to this
