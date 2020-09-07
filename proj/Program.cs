@@ -97,7 +97,8 @@ namespace Apollo_Archives_DB_Downloader
             Console.WriteLine("Saving log file...");
             string to_save = JsonConvert.SerializeObject(LogEntries.ToArray());
             string to_save_path = db_folder_path + "\\Logs.json";
-            System.IO.File.Create(to_save_path);
+            Stream wt = System.IO.File.Create(to_save_path);
+            wt.Dispose();
             await System.IO.File.WriteAllTextAsync(to_save_path, to_save);
             Console.WriteLine("File saved to " + to_save_path);
 
