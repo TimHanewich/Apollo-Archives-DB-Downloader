@@ -14,7 +14,7 @@ namespace Apollo_Archives_DB_Downloader
     {
         static void Main(string[] args)
         {
-            GenerateDatabaseAsync("C:\\Users\\TaHan\\Downloads\\Apollo-Archives-DB-Downloader\\ArchiveOnlineReferences\\Apollo11.json", "C:\\Users\\TaHan\\Downloads\\ApolloArchiveDBs\\Apollo11").Wait();
+            GenerateDatabaseAsync("C:\\Users\\TaHan\\Downloads\\Apollo-Archives-DB-Downloader\\ArchiveOnlineReferences\\Apollo14.json", "C:\\Users\\TaHan\\Downloads\\ApolloArchiveDBs\\Apollo14").Wait();
         }
 
         public static async Task GenerateDatabaseAsync(string archive_online_reference_path, string db_folder_path)
@@ -52,34 +52,42 @@ namespace Apollo_Archives_DB_Downloader
                 List<string> this_entry_image_ids = new List<string>();
                 foreach (AttachedImage attimg in ai.AttachedImages)
                 {
+                    try
+                    {
+                        //Get the extension of this link
+                        int loc_sla = attimg.LinkToImage.LastIndexOf("/");
+                        int loc_per = attimg.LinkToImage.LastIndexOf(".");
+                        if (loc_per > loc_sla)
+                        {     
+                            //Get the extension
+                            string ext = attimg.LinkToImage.Substring(loc_per+1);
+                            
+                            if (ext.ToLower().Contains("htm") == false)
+                            {
+                                //Download the stream
+                                Console.WriteLine("Downloading file from " + attimg.LinkToImage + "...");
+                                HttpResponseMessage hrm = await hc.GetAsync(attimg.LinkToImage);
+                                Stream s = await hrm.Content.ReadAsStreamAsync();
+
+                                //Get a title for this
+                                string this_img_title = Guid.NewGuid().ToString() + "." + ext;
+                                string downloadpath = image_folder_path + "\\" + this_img_title;
+                                Stream write_to = System.IO.File.Create(downloadpath);
+                                s.CopyTo(write_to);
+                                write_to.Dispose();
+                                s.Dispose();
+
+                                //Add it to the list of images for this entry
+                                this_entry_image_ids.Add(this_img_title);
+                            }
+                        }   
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Fatal failure while downloading this: " + JsonConvert.SerializeObject(attimg));
+                    }
                     
-                    //Get the extension of this link
-                    int loc_sla = attimg.LinkToImage.LastIndexOf("/");
-                    int loc_per = attimg.LinkToImage.LastIndexOf(".");
-                    if (loc_per > loc_sla)
-                    {     
-                        //Get the extension
-                        string ext = attimg.LinkToImage.Substring(loc_per+1);
-                        
-                        if (ext.ToLower().Contains("htm") == false)
-                        {
-                            //Download the stream
-                            Console.WriteLine("Downloading file from " + attimg.LinkToImage + "...");
-                            HttpResponseMessage hrm = await hc.GetAsync(attimg.LinkToImage);
-                            Stream s = await hrm.Content.ReadAsStreamAsync();
-
-                            //Get a title for this
-                            string this_img_title = Guid.NewGuid().ToString() + "." + ext;
-                            string downloadpath = image_folder_path + "\\" + this_img_title;
-                            Stream write_to = System.IO.File.Create(downloadpath);
-                            s.CopyTo(write_to);
-                            write_to.Dispose();
-                            s.Dispose();
-
-                            //Add it to the list of images for this entry
-                            this_entry_image_ids.Add(this_img_title);
-                        }
-                    }                    
+                                     
                 }
 
                 //Add those downloaded images to this
