@@ -61,7 +61,7 @@ namespace Apollo_Archives_DB_Downloader
                         //Get the extension
                         string ext = attimg.LinkToImage.Substring(loc_per+1);
                         
-                        if (ext.ToLower().Contains("html") == false)
+                        if (ext.ToLower().Contains("htm") == false)
                         {
                             //Download the stream
                             Console.WriteLine("Downloading file from " + attimg.LinkToImage + "...");
