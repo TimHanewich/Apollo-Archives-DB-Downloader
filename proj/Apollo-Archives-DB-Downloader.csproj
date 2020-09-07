@@ -6,4 +6,10 @@
     <RootNamespace>Apollo_Archives_DB_Downloader</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Reference Include="Tim Hanewich Toolkit">
+      <HintPath>..\Tim Hanewich Toolkit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
