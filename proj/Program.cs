@@ -26,6 +26,7 @@ namespace Apollo_Archives_DB_Downloader
 
             //Make the folder inside of the folder for holding images
             string image_folder_path = db_folder_path + "\\Images";
+            System.IO.Directory.CreateDirectory(image_folder_path);
 
             HttpClient hc = new HttpClient();
 
