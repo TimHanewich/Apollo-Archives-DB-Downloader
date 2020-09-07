@@ -14,7 +14,7 @@ namespace Apollo_Archives_DB_Downloader
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            GenerateDatabaseAsync("C:\\Users\\TaHan\\Downloads\\Apollo-Archives-DB-Downloader\\ArchiveOnlineReferences\\Apollo11.json", "C:\\Users\\TaHan\\Downloads\\A11").Wait();
         }
 
         public static async Task GenerateDatabaseAsync(string archive_online_reference_path, string db_folder_path)
@@ -52,7 +52,7 @@ namespace Apollo_Archives_DB_Downloader
                     //Get a title for this
                     string this_img_title = Guid.NewGuid().ToString() + ".jpg";
                     string downloadpath = image_folder_path + "\\" + this_img_title;
-                    Stream write_to = System.IO.File.OpenWrite(downloadpath);
+                    Stream write_to = System.IO.File.Create(downloadpath);
                     s.CopyTo(write_to);
                     write_to.Dispose();
                     s.Dispose();
