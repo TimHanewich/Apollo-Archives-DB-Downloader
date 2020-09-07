@@ -14,7 +14,7 @@ namespace Apollo_Archives_DB_Downloader
     {
         static void Main(string[] args)
         {
-            GenerateDatabaseAsync("C:\\Users\\TaHan\\Downloads\\Apollo-Archives-DB-Downloader\\ArchiveOnlineReferences\\Apollo11.json", "C:\\Users\\TaHan\\Downloads\\A11-2").Wait();
+            GenerateDatabaseAsync("C:\\Users\\TaHan\\Downloads\\Apollo-Archives-DB-Downloader\\ArchiveOnlineReferences\\Apollo11.json", "C:\\Users\\TaHan\\Downloads\\ApolloArchiveDBs\\Apollo11").Wait();
         }
 
         public static async Task GenerateDatabaseAsync(string archive_online_reference_path, string db_folder_path)
