@@ -6,6 +6,6 @@ namespace ApolloArchives
     {
         public string Title {get; set;}
         public string Description {get; set;}
-        public string[] AssociatedImages {get; set;}
+        public string[] AssociatedFiles {get; set;}
     }
 }

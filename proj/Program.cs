@@ -73,7 +73,7 @@ namespace Apollo_Archives_DB_Downloader
                 }
 
                 //Add those downloaded images to this
-                ale.AssociatedImages =this_entry_image_ids.ToArray();
+                ale.AssociatedFiles = this_entry_image_ids.ToArray();
 
                 //Add it to the list
                 LogEntries.Add(ale);
