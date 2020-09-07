@@ -1,0 +1,1 @@
+These files are JSON serialized "ApolloArchive" objects from the Apollo Archive namespace in the TimHanewichToolkit DLL.
