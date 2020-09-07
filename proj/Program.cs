@@ -14,7 +14,7 @@ namespace Apollo_Archives_DB_Downloader
     {
         static void Main(string[] args)
         {
-            GenerateDatabaseAsync("C:\\Users\\TaHan\\Downloads\\Apollo-Archives-DB-Downloader\\ArchiveOnlineReferences\\Apollo11.json", "C:\\Users\\TaHan\\Downloads\\A11").Wait();
+            GenerateDatabaseAsync("C:\\Users\\TaHan\\Downloads\\Apollo-Archives-DB-Downloader\\ArchiveOnlineReferences\\Apollo11.json", "C:\\Users\\TaHan\\Downloads\\A11-2").Wait();
         }
 
         public static async Task GenerateDatabaseAsync(string archive_online_reference_path, string db_folder_path)
@@ -96,7 +96,10 @@ namespace Apollo_Archives_DB_Downloader
             //Now that we have all of the entries, serialize it and put it in the folder
             Console.WriteLine("Saving log file...");
             string to_save = JsonConvert.SerializeObject(LogEntries.ToArray());
-            await System.IO.File.WriteAllTextAsync(archive_online_reference_path + "\\Logs.json", to_save);
+            Stream write_to_file = System.IO.File.Create(archive_online_reference_path + "\\Logs.json");
+            StreamWriter sw = new StreamWriter(write_to_file);
+            await sw.WriteAsync(to_save);
+            write_to_file.Dispose();
 
             Console.WriteLine("Complete!");
         }
