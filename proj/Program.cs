@@ -96,7 +96,7 @@ namespace Apollo_Archives_DB_Downloader
             //Now that we have all of the entries, serialize it and put it in the folder
             Console.WriteLine("Saving log file...");
             string to_save = JsonConvert.SerializeObject(LogEntries.ToArray());
-            Stream write_to_file = System.IO.File.Create(archive_online_reference_path + "\\Logs.json");
+            Stream write_to_file = System.IO.File.Create(db_folder_path + "\\Logs.json");
             StreamWriter sw = new StreamWriter(write_to_file);
             await sw.WriteAsync(to_save);
             write_to_file.Dispose();
