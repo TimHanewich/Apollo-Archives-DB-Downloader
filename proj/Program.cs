@@ -60,7 +60,7 @@ namespace Apollo_Archives_DB_Downloader
                         string ext = attimg.LinkToImage.Substring(loc_per+1);
 
                         //Get a title for this
-                        string this_img_title = Guid.NewGuid().ToString() + ext;
+                        string this_img_title = Guid.NewGuid().ToString() + "." + ext;
                         string downloadpath = image_folder_path + "\\" + this_img_title;
                         Stream write_to = System.IO.File.Create(downloadpath);
                         s.CopyTo(write_to);
